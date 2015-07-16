@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  form.form-signin(action="/login", method="post")
+    h1.form-signin-heading Sign in
+    input(type="text", name="username", placeholder="Email address")
+    input(type="password", name="password", placeholder="Password")
+    button(type="submit") Sign in
