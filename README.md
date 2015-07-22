@@ -2,7 +2,9 @@
 
 ## Development
 
-run 
+Install mongodb
+
+run
 ```
 npm install
 ```

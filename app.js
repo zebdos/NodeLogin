@@ -8,10 +8,9 @@ var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-
+var models = require('./models.js');
 var routes = require('./routes/index');
 var login = require('./routes/login');
-
 var users = require('./data/users'); // user/password file
 var salts = require('./data/salts'); // salts file
 
