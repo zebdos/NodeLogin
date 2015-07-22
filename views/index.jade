@@ -3,9 +3,9 @@ extends layout
 block content
   div.col-md-offset-4.col-md-4
     form.form-signin(action="/login", method="post")
-      h1.form-signin-heading Sign in
+      h2.form-signin-heading Sign in
       div.form-group
-        input(type="text", name="username", placeholder="Email address")
+        input(type="text", name="username", placeholder="Username")
       div.form-group
         input(type="password", name="password", placeholder="Password")
-      button(type="submit") Sign in
+      button.btn.btn-default(type="submit") Sign in
