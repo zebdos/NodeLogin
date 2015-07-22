@@ -1,8 +1,11 @@
 extends layout
 
 block content
-  form.form-signin(action="/login", method="post")
-    h1.form-signin-heading Sign in
-    input(type="text", name="username", placeholder="Email address")
-    input(type="password", name="password", placeholder="Password")
-    button(type="submit") Sign in
+  div.col-md-offset-4.col-md-4
+    form.form-signin(action="/login", method="post")
+      h1.form-signin-heading Sign in
+      div.form-group
+        input(type="text", name="username", placeholder="Email address")
+      div.form-group
+        input(type="password", name="password", placeholder="Password")
+      button(type="submit") Sign in
