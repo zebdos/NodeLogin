@@ -20,7 +20,7 @@ var salts = require('./data/salts'); // salts file
 var locales = require('./middleware/locales');
 var winston = require('winston');
 var csrf = require('csurf');
-
+var roles = require('./middleware/roles');
 var app = express();
 
 //log
@@ -42,12 +42,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-var roles = new connectRoles();
-app.use(roles.middleware());
-app.set('roles', roles);
+app.use(roles.middleware);
+app.set('roles', roles.roles);
 
 app.all('*', locales);
-//app.use(csrf({ cookie: true }));
+app.use(csrf());
 app.use('/', routes);
 app.use('/login', login);
 app.use('/savesecurity', savesecurity);

@@ -1,6 +1,8 @@
 var connectRoles = require('connect-roles');
 var express = require('express');
+var roles = require('../middleware/roles').roles;
 var router = express.Router();
+
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res, next) {
