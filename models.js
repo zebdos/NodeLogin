@@ -47,11 +47,14 @@ User.methods.changePassword = function (newPassword, newSalt) {
   };
   this.password = newPassword;
   this.salt = newSalt;
-  this.oldPassword.push(oldPasswordObj);
+  this.oldPasswords.push(oldPasswordObj);
+};
+
+User.methods.verifyPassword = function (password) {
+  return hashPassword(password, this.salt) == this.password;
 };
 
 function hashPassword (password, salt) {
-  console.log('function hashPassword()');
   return crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512');
 }
 
