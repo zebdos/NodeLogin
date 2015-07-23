@@ -8,7 +8,9 @@ var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+
 var models = require('./models.js');
+var User = models.User;
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./data/users'); // user/password file
@@ -32,9 +34,6 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/login', login);
-
-// authentication test
-authenticate("admin", "admin");
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,34 +73,26 @@ function createSalt(len) {
         .slice(0,len);   // return required number of characters
 };
 
-function authenticate(username, password) {
-  if (!salts[username]) return false;
-  var salt = salts[username];
-  var key = crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512');
-  var hash = key.toString('hex');
-  console.log(findUser(username).password === hash);
-};
-
-// Find user in data/users.js
-function findUser(username) {
-  return _.find(users, function(user) { return user.username == username });
-}
-
 passport.serializeUser(function(user, done) {
   done(null, user.username);
 });
 
 passport.deserializeUser(function(username, done) {
-  if (!findUser(username)) { done(null, false); }
-  return done(null, findUser(username));
+  User.find({ 'username' :  username }, function(err, user) {
+    done(err, user);
+  });
 });
 
-passport.use(new localStrategy(
-  function(username, password, done) {
-    if (!findUser(username)) { done(null, false, { message: 'Wrong credentials.' }); }
-    if (!authenticate(username), password) { done(null, false, { message: 'Wrong credentials.' }); }
-    return done(null, username);
-  }
-));
+passport.use(new localStrategy({
+    passReqToCallback : true // allows us to pass back the entire request to the callback
+  }, function(req, username, password, done) {
+    console.log(username);
+    User.findOne({ username:  username }, function(err, user) {
+      if (err) return done(err);
+      if (!user || !user.verifyPassword(password)) return done(null, false, { message: 'Wrong credentials.' });
+      // user authenticated
+      return done(null, user);
+    });
+}));
 
 module.exports = app;
