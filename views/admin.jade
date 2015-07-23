@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  div.col-md-offset-4.col-md-4
+    form.form-signin(action="/save", method="post")
+      h2 Security settings
+      h3 Delay by user based on the number of retries
+      div.form-group
+        input(type="text", name="maxLoginTry", placeholder="Max login try")
+      div.form-group
+        input(type="text", name="maxResetTryTime", placeholder="Max reset try time (minutes)")
+      div.form-group
+        .checkbox
+        label
+        input(type='checkbox', name='checkbox', value='test')
+        |  Blocking access following a reaching the second number maximum attempts
+      h3 Password management
+      input(type="radio", name="reset_password_type", value="1")
+      |   Periodically   
+      input(type="radio", name="reset_password_type", value="0")
+      |   Event
+      div.form-group
+        input(type="text", name="maxTimeSamePassword", placeholder="Max time same password (days)")
+      h3 Policy configurable password
+      div.form-group
+        input(type="text", name="passwordComplexityRegex", placeholder="Password complexity regex")
+      div.form-group
+        input(type="text", name="cantUseLastNumberPassword", placeholder="Number of last passwords cant use")
+      button.btn.btn-default(type="submit") Save
