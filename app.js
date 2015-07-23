@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.all('*', locales);
+app.all('*', locales);
 
 app.use('/', routes);
 app.use('/login', login);
