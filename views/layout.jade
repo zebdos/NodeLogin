@@ -17,11 +17,14 @@ html
               a(href="/login/changePassword") Change your Password
             li
               a(href="/login/logout") Logout
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href="/admin") Admin
-          li
-            a(href="/carre") Carre
-          li
-            a(href="/rond") Rond                        
+          ul.nav.navbar-nav.navbar-right
+            if user[0].hasRole('admin')
+              li
+                a(href="/admin") Admin
+            if user[0].hasRole('carre')
+              li
+                a(href="/carre") Carre
+            if user[0].hasRole('rond')    
+              li
+                a(href="/rond") Rond                        
     block content
