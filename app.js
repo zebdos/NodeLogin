@@ -13,6 +13,7 @@ var models = require('./models.js');
 var User = models.User;
 var routes = require('./routes/index');
 var login = require('./routes/login');
+var savesecurity = require('./routes/savesecurity');
 var users = require('./data/users'); // user/password file
 var salts = require('./data/salts'); // salts file
 
@@ -35,6 +36,7 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/login', login);
+app.use('/savesecurity', savesecurity);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
