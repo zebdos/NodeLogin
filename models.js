@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
 mongoose.connect('mongodb://localhost/GTI619');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
