@@ -19,7 +19,7 @@ function hasRoles(roleName) {
     console.log(req.user[0]);
     if (req.user[0].hasRole(roleName)) return  next();
     else {
-      res.render('302', 'Something broke!');
+      res.render(403); // forbidden
     }
   };
 }

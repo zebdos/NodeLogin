@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-var connectRoles = require('connect-roles');
 var session = require('express-session');
 var models = require('./models.js');
 var User = models.User;
@@ -16,8 +15,6 @@ var ParamSecurite = models.ParamSecurite;
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var savesecurity = require('./routes/savesecurity');
-var users = require('./data/users'); // user/password file
-var salts = require('./data/salts'); // salts file
 var locales = require('./middleware/locales');
 var winston = require('winston');
 var roles = require('./middleware/roles');
@@ -108,9 +105,9 @@ passport.use(new localStrategy({
         winston.log('info', username + ': wrong credentials');
         user.numberLoginTry++;
         user.save(function (err) {
-			if (err) return console.log(err);
-			console.log('User saved');
-		  });
+			       if (err) return console.log(err);
+			          console.log('User saved');
+		    });
         return done(err);
       }
       /*var paramSecurite = ParamSecurite.findOne({}, {}, { sort: { 'date' : -1 } });
@@ -126,9 +123,9 @@ passport.use(new localStrategy({
       }*/
       user.numberLoginTry = 0;
       user.save(function (err) {
-		if (err) return console.log(err);
-		console.log('User saved');
-	  });
+  		if (err) return console.log(err);
+  		  console.log('User saved');
+  	  });
       // user authenticated
       winston.log('info', username + ': connect');
       return done(null, user);
