@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+var connectRoles = require('connect-roles');
 var session = require('express-session');
 var models = require('./models.js');
 var User = models.User;
@@ -20,9 +21,8 @@ var salts = require('./data/salts'); // salts file
 var locales = require('./middleware/locales');
 var winston = require('winston');
 var csrf = require('csurf');
-
+var roles = require('./middleware/roles');
 var app = express();
-
 
 //log
 winston.add(winston.transports.File, { filename: 'access.log' });
@@ -43,8 +43,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(roles.middleware);
+app.set('roles', roles.roles);
+
 app.all('*', locales);
-//app.use(csrf({ cookie: true }));
+app.use(csrf());
 app.use('/', routes);
 app.use('/login', login);
 app.use('/savesecurity', savesecurity);
@@ -99,8 +102,9 @@ passport.deserializeUser(function(username, done) {
 
 passport.use(new localStrategy({
     passReqToCallback : true // allows us to pass back the entire request to the callback
-  }, function(req, username, password, done) {
-    console.log(username);
+  },
+  function(req, username, password, done) {
+    // console.log(username);
     User.findOne({ username:  username }, function(err, user) {
       if (err) return done(err);
       if (!user || !user.verifyPassword(password)) {
