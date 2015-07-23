@@ -59,6 +59,13 @@ User.methods.hasRole = function (roleName) {
   return this.roles.indexOf(roleName) != -1;
 };
 
+User.methods.alreadyUsedPassword = function (nbPassword, newPassword) {
+  // for ( i= this.oldPasswords.length-1; i >= 0 i-nbPassword != i; --i) {
+  //   var oldPassword = this.oldPasswords;
+  // }
+  // return true;
+};
+
 function hashPassword (password, salt) {
   return crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512');
 }

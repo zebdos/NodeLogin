@@ -11,7 +11,7 @@ var admin = new User({
   lastLogin: Date.now(),
   isLock: false,
   hasFailMaxTry: false,
-  roles: ["rond","carre"]
+  roles: ["admin","rond","carre"]
 });
 
 var carre = new User({

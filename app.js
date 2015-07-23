@@ -20,7 +20,6 @@ var users = require('./data/users'); // user/password file
 var salts = require('./data/salts'); // salts file
 var locales = require('./middleware/locales');
 var winston = require('winston');
-// var csrf = require('csurf');
 var roles = require('./middleware/roles');
 var app = express();
 
@@ -42,10 +41,10 @@ app.use(session({secret:'GTI619_LE_COURS_DE_SECURITE', resave: false, saveUninit
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(roles.middleware());
+roles(app);
+
 
 app.all('*', locales);
-// app.use(csrf());
 app.use('/', routes);
 app.use('/login', login);
 app.use('/savesecurity', savesecurity);
@@ -118,12 +117,12 @@ passport.use(new localStrategy({
       if(paramSecurite){
       	var delay = Math.floor(Math.abs(Date.now - user.lastConnectionFailDate) / 600000);
       	if(delay > paramSecurite.maxResetTryTime){
-      		
+
       	}
       }
       if(paramSecurite && user.numberLoginTry > paramSecurite.maxLoginTry){
       	console.log("Maximum of connection tries has been reached!");
-      	
+
       }*/
       user.numberLoginTry = 0;
       user.save(function (err) {
@@ -135,5 +134,6 @@ passport.use(new localStrategy({
       return done(null, user);
     });
 }));
+
 
 module.exports = app;

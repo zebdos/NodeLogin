@@ -7,7 +7,6 @@ var router = express.Router();
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
-  // res.locals.csrfToken = req.csrfToken();
   res.render('index');
 });
 
