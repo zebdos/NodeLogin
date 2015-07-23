@@ -60,4 +60,6 @@ function hashPassword (password, salt) {
 
 module.exports = {
   User: mongoose.model("User", User),
+  ParamSecurite: mongoose.model("ParamSecurite", ParamSecurite),
+  Role : mongoose.model("Role", Role)
 };
