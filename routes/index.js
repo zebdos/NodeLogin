@@ -7,17 +7,16 @@ router.get('/', isLoggedIn, function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/rond', function(req, res, next) {
+router.get('/rond', isLoggedIn, function(req, res, next) {
   res.render('cercle');
 });
 
-router.get('/carre', function(req, res, next) {
+router.get('/carre', isLoggedIn, function(req, res, next) {
   res.render('square');
 });
 
-router.get('/admin', function(req, res, next) {
+router.get('/admin', isLoggedIn, function(req, res, next) {
   res.render('admin');
-
 });
 
 function isLoggedIn(req, res, next) {

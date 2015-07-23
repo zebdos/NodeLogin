@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var crypto = require('crypto');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-
+var session = require('express-session');
 var models = require('./models.js');
 var User = models.User;
 var routes = require('./routes/index');
@@ -28,6 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret:'GTI619_LE_COURS_DE_SECURITE', resave: false, saveUninitialized: false, cookie:{maxAge:5*60*1000}}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
