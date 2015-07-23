@@ -6,13 +6,17 @@ block content
       h2 Security settings
       h3 Delay by user based on the number of retries
       div.form-group
-        input(type="text", name="maxLoginTry", placeholder="Max login try")
+        label(for="maxlogintry")
+        | Max login try
+        input(id="maxlogintry", type="text", name="maxLoginTry", placeholder="Max login try", value="#{security.maxLoginTry}")
       div.form-group
-        input(type="text", name="maxResetTryTime", placeholder="Max reset try time (minutes)")
+        label(for="maxeresettrytime")
+        | Max reset try time minutes
+        input(id="maxeresettrytime", type="text", name="maxResetTryTime", placeholder="Max reset try time (minutes)", value="#{security.maxResetTryTime}")
       div.form-group
         .checkbox
-        label
-        input(type='checkbox', name='checkbox', value='test')
+        input(id="blockSecondMaxLogin", type="checkbox", name="checkbox", checked="#{security.blockSecondMaxLogin}")
+        label(for"blockSecondMaxLogin")
         |  Blocking access following a reaching the second number maximum attempts
       h3 Password management
       input(type="radio", name="reset_password_type", value="1")

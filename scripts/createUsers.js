@@ -1,7 +1,8 @@
 var models = require('../models.js');
 var User = models.User;
+var ParamSecurite = models.ParamSecurite;
 User.find({}).remove().exec();
-
+ParamSecurite.find({}).remove().exec();
 
 var admin = new User({
   username: "admin",
@@ -38,6 +39,21 @@ var rond = new User({
   hasFailMaxTry: false,
   roles: ["rond"]
 });
+
+var paramSecurite = new ParamSecurite({
+  name: 'default',
+  maxLoginTry: 3,
+  maxResetTryTime: 5,
+  blockSecondMaxLogin : true,
+  maxTimeSamePassword : 15,
+  passwordComplexityRegex : '',
+  cantUseLastNumberPassword: 3
+});
+
+paramSecurite.save(function (err) {
+  if (err) return console.log(err);
+  console.log('Param securite save');
+})
 
 admin.save(function (err) {
   if (err) return console.log(err);

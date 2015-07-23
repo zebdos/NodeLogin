@@ -4,13 +4,14 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 
 var ParamSecurite = new Schema({
+  name: String,
   date: { type: Date, default: Date.now },
   maxLoginTry: Number,
   maxResetTryTime: Number, // In minute
   blockSecondMaxLogin : Boolean,
   maxTimeSamePassword : Number, // In Day
   passwordComplexityRegex : String,
-  cantUseLastNumberPassword: Number, // The user cannot use the last * password
+  cantUseLastNumberPassword: Number // The user cannot use the last * password
 });
 
 
