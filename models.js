@@ -21,6 +21,8 @@ var User = new Schema({
   salt : String,
   oldPasswords : [{ timeChange : Date, password: String, salt : String }],
   isAdmin : Boolean,
+  numberLoginTry: {type: Number, default: 0},
+  lastConnectionFailDate: { type: Date, default: Date.now },
   lastLogin: Date,
   isLock: Boolean,
   hasFailMaxTry: Boolean, //connect has fail the maximum number of try

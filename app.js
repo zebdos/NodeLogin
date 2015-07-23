@@ -11,6 +11,7 @@ var localStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var models = require('./models.js');
 var User = models.User;
+var ParamSecurite = models.ParamSecurite;
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var savesecurity = require('./routes/savesecurity');
@@ -104,8 +105,29 @@ passport.use(new localStrategy({
       if (err) return done(err);
       if (!user || !user.verifyPassword(password)) {
         winston.log('info', username + ': wrong credentials');
-        return done(null, false, { message: 'Wrong credentials.' });
+        user.numberLoginTry++;
+        user.save(function (err) {
+			if (err) return console.log(err);
+			console.log('User saved');
+		  });
+        return done(err);
       }
+      /*var paramSecurite = ParamSecurite.findOne({}, {}, { sort: { 'date' : -1 } });
+      if(paramSecurite){
+      	var delay = Math.floor(Math.abs(Date.now - user.lastConnectionFailDate) / 600000);
+      	if(delay > paramSecurite.maxResetTryTime){
+      		
+      	}
+      }
+      if(paramSecurite && user.numberLoginTry > paramSecurite.maxLoginTry){
+      	console.log("Maximum of connection tries has been reached!");
+      	
+      }*/
+      user.numberLoginTry = 0;
+      user.save(function (err) {
+		if (err) return console.log(err);
+		console.log('User saved');
+	  });
       // user authenticated
       winston.log('info', username + ': connect');
       return done(null, user);
