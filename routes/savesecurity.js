@@ -1,27 +1,24 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+var models = require('../models.js');
+var ParamSecurite = models.ParamSecurite;
 
 
-router.get('/savesecurity',
-  passport.authenticate('local', { successRedirect: '/admin',
-                                   failureRedirect: '/admin',
-                                   failureFlash: true },
+router.post('/',
     function(req, res) {
-    	console.log("YAY");
-      /*var paramSecurit = new ParamSecurit({
-		maxLoginTry: ,
-		maxResetTryTime: ,
-		blockSecondMaxLogin : ,
-		maxTimeSamePassword : ,
-		passwordComplexityRegex : ,
-		cantUseLastNumberPassword: ,
+      var paramSecurite = new ParamSecurite({
+		maxLoginTry: req.body.maxLoginTry,
+		maxResetTryTime: req.body.maxResetTryTime,
+		blockSecondMaxLogin : req.body.blockSecondMaxLogin,
+		maxTimeSamePassword : req.body.maxTimeSamePassword,
+		passwordComplexityRegex : req.body.passwordComplexityRegex,
+		cantUseLastNumberPassword: req.body.cantUseLastNumberPassword
 	  });
-      router.save(function (err) {
+      paramSecurite.save(function (err) {
 		if (err) return console.log(err);
-		console.log('User admin save');
-	  });*/
-    })
-);
+		console.log('ParamSecurite save');
+	  });
+    });
 
 module.exports = router;

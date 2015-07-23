@@ -19,6 +19,10 @@ router.get('/admin', isLoggedIn, function(req, res, next) {
   res.render('admin');
 });
 
+router.get('/savesecurity', isLoggedIn, function(req, res, next) {
+  res.render('savesecurity');
+});
+
 function isLoggedIn(req, res, next) {
     // if the user is authenticated continue
     if (req.isAuthenticated())
