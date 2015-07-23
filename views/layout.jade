@@ -11,6 +11,10 @@ html
       div.container-fluid
         div.navbar-header
           a.navbar-brand(href="/") GTI619
+        if isAuthenticated
+          ul.nav.navbar-nav.navbar-left
+            li
+            a(href="/login/logout") Logout
         ul.nav.navbar-nav.navbar-right
           li
             a(href="/admin") Admin

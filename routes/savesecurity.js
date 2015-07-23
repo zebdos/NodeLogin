@@ -3,10 +3,10 @@ var passport = require('passport');
 var router = express.Router();
 
 
-router.post('/savesecurity',
+router.get('/savesecurity',
   passport.authenticate('local', { successRedirect: '/admin',
                                    failureRedirect: '/admin',
-                                   failureFlash: true }, 
+                                   failureFlash: true },
     function(req, res) {
     	console.log("YAY");
       /*var paramSecurit = new ParamSecurit({

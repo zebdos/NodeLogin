@@ -16,7 +16,7 @@ var login = require('./routes/login');
 var savesecurity = require('./routes/savesecurity');
 var users = require('./data/users'); // user/password file
 var salts = require('./data/salts'); // salts file
-
+var locales = require('./middleware/locales');
 var app = express();
 
 // view engine setup
@@ -33,6 +33,8 @@ app.use(session({secret:'GTI619_LE_COURS_DE_SECURITE', resave: false, saveUninit
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// app.all('*', locales);
 
 app.use('/', routes);
 app.use('/login', login);
@@ -57,7 +59,7 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
-};
+}
 
 // production error handler
 // no stacktraces leaked to user
@@ -74,7 +76,7 @@ function createSalt(len) {
     return crypto.randomBytes(Math.ceil(len/2))
         .toString('hex') // convert to hexadecimal format
         .slice(0,len);   // return required number of characters
-};
+}
 
 passport.serializeUser(function(user, done) {
   done(null, user.username);
