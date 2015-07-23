@@ -49,6 +49,7 @@ User.methods.changePassword = function (newPassword) {
   this.password = newPassword;
   this.salt = this.createSalt(32);
   this.oldPasswords.push(oldPasswordObj);
+  this.save();
 };
 
 // Function used to generate salts (not used for authentication)
@@ -74,7 +75,7 @@ User.methods.alreadyUsedPassword = function (nbPassword, newPassword) {
 };
 
 function hashPassword (password, salt) {
-  return crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512');
+  return crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512').toString('hex');
 }
 
 module.exports = {

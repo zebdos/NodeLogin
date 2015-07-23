@@ -16,15 +16,16 @@ html
             li
               a(href="/login/changePassword") Change your Password
             li
-              a(href="/login/logout") Logout
+              a(href="/login/logout") Logout #{username}
           ul.nav.navbar-nav.navbar-right
-            if user[0].hasRole('admin')
+            if user.hasRole('admin')
               li
                 a(href="/admin") Admin
-            if user[0].hasRole('carre')
+            if user.hasRole('carre')
               li
                 a(href="/carre") Carre
-            if user[0].hasRole('rond')    
+            if user.hasRole('rond')    
               li
                 a(href="/rond") Rond                        
-    block content
+    div.container.row
+      block content

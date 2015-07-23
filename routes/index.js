@@ -3,15 +3,7 @@ var connectRoles = require('connect-roles');
 var express = require('express');
 var router = express.Router();
 var isLoggedIn = require('../middleware/logged.js');
-
-function hasRoles(roleName) {
-  return function(req, res, next) {
-    if (req.user[0].hasRole(roleName)) return  next();
-    else {
-      res.render(403); // forbidden
-    }
-  };
-}
+var hasRoles = require('../middleware/roles.js');
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res, next) {
@@ -21,7 +13,7 @@ router.get('/', isLoggedIn, function(req, res, next) {
   if (_.contains(roles, 'rond')) res.redirect('/rond');
 });
 
-router.get('/rond', isLoggedIn, hasRoles('rond'), function(req, res, next) {
+router.get('/rond', isLoggedIn, hasRoles('rond') , function(req, res, next) {
   res.render('circle');
 });
 

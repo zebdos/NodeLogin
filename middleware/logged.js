@@ -1,6 +1,6 @@
 var _ = require('underscore');
 
-module.exports = function isLoggedIn(req, res, next) {
+module.exports = function (req, res, next) {
     if (req.isAuthenticated()) return next();
     res.redirect('/login');
 };
