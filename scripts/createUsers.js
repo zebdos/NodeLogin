@@ -2,10 +2,11 @@ var models = require('../models.js');
 var User = models.User;
 User.find({}).remove().exec();
 
+
 var admin = new User({
   username: "admin",
   password : "admin",
-  salt : "qwerty123",
+  salt : "bfbab2c6afbab13f7f18cf8091c3b51f",
   oldPasswords : [],
   isAdmin : true,
   lastLogin: Date.now(),
@@ -17,7 +18,7 @@ var admin = new User({
 var carre = new User({
   username: "carre",
   password : "carre",
-  salt : "qaaawerty123",
+  salt : "0a776e8b216f065fe345ff6ce851ff35",
   oldPasswords : [],
   isAdmin : false,
   lastLogin: Date.now(),
@@ -29,7 +30,7 @@ var carre = new User({
 var rond = new User({
   username: "rond",
   password : "rond",
-  salt : "qadsadsty123",
+  salt : "2be4fcf6013f370d2b6a84707865d367",
   oldPasswords : [],
   isAdmin : false,
   lastLogin: Date.now(),

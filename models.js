@@ -37,7 +37,7 @@ User.pre('save', function (next) {
   return next();
 });
 
-User.methods.changePassword = function (newPassword, newSalt) {
+User.methods.changePassword = function (newPassword) {
   var oldPassord = this.password;
   var oldSalt = this.salt;
 
@@ -47,8 +47,15 @@ User.methods.changePassword = function (newPassword, newSalt) {
     timeChange : Date.now()
   };
   this.password = newPassword;
-  this.salt = newSalt;
+  this.salt = this.createSalt(32);
   this.oldPasswords.push(oldPasswordObj);
+};
+
+// Function used to generate salts (not used for authentication)
+User.methods.createSalt = function (len) {
+    return crypto.randomBytes(Math.ceil(len/2))
+        .toString('hex') // convert to hexadecimal format
+        .slice(0,len);   // return required number of characters
 };
 
 User.methods.verifyPassword = function (password) {

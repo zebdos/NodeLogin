@@ -77,12 +77,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Function used to generate salts (not used for authentication)
-function createSalt(len) {
-    return crypto.randomBytes(Math.ceil(len/2))
-        .toString('hex') // convert to hexadecimal format
-        .slice(0,len);   // return required number of characters
-}
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.username);
