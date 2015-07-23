@@ -13,9 +13,7 @@ var ParamSecurite = new Schema({
   cantUseLastNumberPassword: Number, // The user cannot use the last * password
 });
 
-var Role = new Schema({
-  name: String
-});
+
 
 var User = new Schema({
   username: String,
@@ -26,6 +24,7 @@ var User = new Schema({
   lastLogin: Date,
   isLock: Boolean,
   hasFailMaxTry: Boolean, //connect has fail the maximum number of try
+  roles : [String]
 });
 
 User.pre('save', function (next) {
@@ -54,12 +53,15 @@ User.methods.verifyPassword = function (password) {
   return hashPassword(password, this.salt) == this.password;
 };
 
+User.methods.hasRole = function (roleName) {
+  return this.roles.indexOf(roleName) != -1;
+};
+
 function hashPassword (password, salt) {
   return crypto.pbkdf2Sync(password, salt, 4096, 512, 'sha512');
 }
 
 module.exports = {
   User: mongoose.model("User", User),
-  ParamSecurite: mongoose.model("ParamSecurite", ParamSecurite),
-  Role : mongoose.model("Role", Role)
+  ParamSecurite: mongoose.model("ParamSecurite", ParamSecurite)
 };

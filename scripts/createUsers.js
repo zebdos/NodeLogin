@@ -10,7 +10,8 @@ var admin = new User({
   isAdmin : true,
   lastLogin: Date.now(),
   isLock: false,
-  hasFailMaxTry: false
+  hasFailMaxTry: false,
+  roles: ["rond","carre"]
 });
 
 var carre = new User({
@@ -21,7 +22,8 @@ var carre = new User({
   isAdmin : false,
   lastLogin: Date.now(),
   isLock: false,
-  hasFailMaxTry: false
+  hasFailMaxTry: false,
+  roles: ["carre"]
 });
 
 var rond = new User({
@@ -32,7 +34,8 @@ var rond = new User({
   isAdmin : false,
   lastLogin: Date.now(),
   isLock: false,
-  hasFailMaxTry: false
+  hasFailMaxTry: false,
+  roles: ["rond"]
 });
 
 admin.save(function (err) {
