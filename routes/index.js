@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { isAuthenticated: true });
 });
 
 router.get('/rond', isLoggedIn, function(req, res, next) {
@@ -24,7 +24,7 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    res.render('index'); // carre, rond blabla
+    res.render('index',{ isAuthenticated: false }); // carre, rond blabla
 }
 
 module.exports = router;

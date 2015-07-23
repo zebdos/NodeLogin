@@ -2,10 +2,11 @@ extends layout
 
 block content
   div.col-md-offset-4.col-md-4
-    form.form-signin(action="/login", method="post")
-      h2.form-signin-heading Sign in
-      div.form-group
-        input(type="text", name="username", placeholder="Username")
-      div.form-group
-        input(type="password", name="password", placeholder="Password")
-      button.btn.btn-default(type="submit") Sign in
+    if !isAuthenticated
+      form.form-signin(action="/login", method="post")
+        h2.form-signin-heading Sign in
+        div.form-group
+          input(type="text", name="username", placeholder="Username")
+        div.form-group
+          input(type="password", name="password", placeholder="Password")
+        button.btn.btn-default(type="submit") Sign in
