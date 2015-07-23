@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+/*
+router.get('/changePassword', function(req, res, next) {
+  res.render('changePassword');
+
+});*/
 
 /* POST login. */
 router.post('/',
@@ -14,6 +19,10 @@ router.post('/',
                                    failureRedirect: '/login',
                                    failureFlash: true })
 );
+
+router.get('/changePassword', function(req, res, next) {
+	res.render('changePassword');
+});
 
 router.get('/logout',
   function(req, res, next) {
