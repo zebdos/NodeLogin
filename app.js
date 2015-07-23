@@ -100,27 +100,30 @@ passport.use(new localStrategy({
         winston.log('info', username + ': wrong credentials');
         user.numberLoginTry++;
         user.save(function (err) {
-			       if (err) return console.log(err);
-			          console.log('User saved');
-		    });
+      if (err) return console.log(err);
+          console.log('User saved');
+    });
+ParamSecurite.findOne({}, function(err, paramSecurite){
+
+      console.log("numberLoginTry " + user.numberLoginTry);
+      console.log("maxLoginTry " + paramSecurite.maxLoginTry);
+
+      if(paramSecurite && user.numberLoginTry > paramSecurite.maxLoginTry){
+      console.log("Maximum of connection tries has been reached!");
+      var err2 = new Error("Access Denied");
+      err2.status = 403;
+      return done(err2);
+      }
+      });
         return done(err);
       }
-      /*var paramSecurite = ParamSecurite.findOne({}, {}, { sort: { 'date' : -1 } });
-      if(paramSecurite){
-      	var delay = Math.floor(Math.abs(Date.now - user.lastConnectionFailDate) / 600000);
-      	if(delay > paramSecurite.maxResetTryTime){
 
-      	}
-      }
-      if(paramSecurite && user.numberLoginTry > paramSecurite.maxLoginTry){
-      	console.log("Maximum of connection tries has been reached!");
-
-      }*/
       user.numberLoginTry = 0;
       user.save(function (err) {
-  		if (err) return console.log(err);
-  		  console.log('User saved');
-  	  });
+  if (err) return console.log(err);
+    console.log('User saved');
+    });
+
       // user authenticated
       winston.log('info', username + ': connect');
       return done(null, user);

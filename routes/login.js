@@ -25,8 +25,6 @@ router.post('/changePassword', isLoggedIn, function(req, res, next) {
      if (err) return next(err);
      if (!user.verifyPassword(req.body.oldPassword)) return res.redirect('/');
      winston.log('info', user.username + ': change password');
-     console.log('test2');
-     console.log(req.body.newPassword);
      user.changePassword(req.body.newPassword);
      res.redirect('/');
    });
