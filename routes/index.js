@@ -8,7 +8,7 @@ router.get('/', isLoggedIn, function(req, res, next) {
 });
 
 router.get('/rond', isLoggedIn, function(req, res, next) {
-  res.render('cercle');
+  res.render('circle');
 });
 
 router.get('/carre', isLoggedIn, function(req, res, next) {
@@ -27,7 +27,7 @@ function isLoggedIn(req, res, next) {
     // if the user is authenticated continue
     if (req.isAuthenticated())
         return next();
-  
+
     res.render('index'); // carre, rond blabla
 }
 

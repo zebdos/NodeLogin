@@ -1,9 +1,13 @@
 var express = require('express');
 var passport = require('passport');
+//var csrf = require('csurf');
+
+//var csrfProtection = csrf({ cookie: true });
 var router = express.Router();
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
+  res.locals.csrfToken = req.csrfToken();
   res.render('index');
 });
 

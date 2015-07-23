@@ -17,7 +17,15 @@ var savesecurity = require('./routes/savesecurity');
 var users = require('./data/users'); // user/password file
 var salts = require('./data/salts'); // salts file
 var locales = require('./middleware/locales');
+var winston = require('winston');
+var csrf = require('csurf');
+
 var app = express();
+
+
+//log
+winston.add(winston.transports.File, { filename: 'access.log' });
+winston.remove(winston.transports.Console);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,7 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.all('*', locales);
-
+//app.use(csrf({ cookie: true }));
 app.use('/', routes);
 app.use('/login', login);
 app.use('/savesecurity', savesecurity);
@@ -94,8 +102,12 @@ passport.use(new localStrategy({
     console.log(username);
     User.findOne({ username:  username }, function(err, user) {
       if (err) return done(err);
-      if (!user || !user.verifyPassword(password)) return done(null, false, { message: 'Wrong credentials.' });
+      if (!user || !user.verifyPassword(password)) {
+        winston.log('info', username + ': wrong credentials');
+        return done(null, false, { message: 'Wrong credentials.' });
+      }
       // user authenticated
+      winston.log('info', username + ': connect');
       return done(null, user);
     });
 }));
